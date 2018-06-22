@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Archive"
+title: "八万四千の法门"
 description: "文章归档"
 header-img: "img/orange.jpg"
 ---
