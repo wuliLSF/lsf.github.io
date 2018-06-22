@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "milestone"
+title: "八万四千法门"
 description: "代表作"
 header-img: "img/zhihu.jpg"
 ---
