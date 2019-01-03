@@ -11,7 +11,7 @@ description: 文章金句。
 
 ## 	MySQL 5.6 下载
 
-​		![](E:\gif_rec\mysql5.6下载.gif)
+​		![](https://github.com/will001449/will.github.io/blob/master/img/mysql5.6%E4%B8%8B%E8%BD%BD.gif)
 
 ​												<!--图一-->
 
