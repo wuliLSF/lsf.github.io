@@ -3,7 +3,7 @@ layout: post
 title: MySQL 5.6 二进制安装方式
 date: 2015-3-02
 categories: blog
-tags: [标签一,标签二]
+tags: [MySQL]
 description: 文章金句。
 ---
 
