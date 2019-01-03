@@ -39,7 +39,7 @@ description: 文章金句。
 
 ## 	解压MySQL 5.6 二进制安装包
 
-![mysql5.6解压](E:\gif_rec\mysql5.6解压.gif)
+![mysql5.6解压](https://github.com/will001449/will.github.io/blob/master/img/mysql5.6%E8%A7%A3%E5%8E%8B.gif)
 
 ​												<!--图二-->			
 
