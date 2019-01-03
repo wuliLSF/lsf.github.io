@@ -6,6 +6,240 @@ header-img: "img/zhihu.jpg"
 ---
 
 这个页面放置你的代表作。
+<h1>MySQL 5.6 二进制安装方式</h1>
+<h2>MySQL 5.6 下载</h2>
+<p>		<img src='https://github.com/will001449/will.github.io/blob/master/img/mysql5.6%E4%B8%8B%E8%BD%BD.gif' alt='' referrerPolicy='no-referrer' /></p>
+<p>												<!--图一--></p>
+<p>		进入<strong>MySQL</strong><a href='https://www.mysql.com/'>官网</a></p>
+<p>		选择<strong>DOWNLOAD</strong></p>
+<p>		将页面拉到最后选择<strong>MySQL Community Edition（GPL）</strong>中的 —&gt; <strong>Community（GPL）Downloads</strong></p>
+<p>		选择<strong>MySQL Community Server（GPL）</strong></p>
+<p>		选择<strong>Looking for previous GA versions</strong> 中的 —&gt; <strong>MySQL Community Server 5.6</strong></p>
+<p>		<strong>Selection Version</strong> 选择 <strong>5.6.42</strong></p>
+<p>		<strong>Selection Version</strong> 选择 <strong>Linux-Generic</strong></p>
+<p>		<strong>Select OS Version</strong> 选择 <strong>Linux-Generic（glibc 2.12）（x86，64bit）</strong></p>
+<p>		选择<strong>Download</strong></p>
+<hr />
+<p>&nbsp;</p>
+<h2>解压MySQL 5.6 二进制安装包</h2>
+<p><img src='file://E:/gif_rec/mysql5.6%E8%A7%A3%E5%8E%8B.gif' alt='mysql5.6解压' referrerPolicy='no-referrer' /></p>
+<p>												<!--图二-->			</p>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# cd /usr/local/src
+[root@localhost src]# ll
+total 321272
+-rw-r--r-- 1 root root 328979165 Jan  3 08:27 mysql-5.6.42-linux-glibc2.12-x86_64.tar.gz
+[root@localhost src]# tar -zxvf mysql-5.6.42-linux-glibc2.12-x86_64.tar.gz
+[root@localhost src]# mv mysql-5.6.42-linux-glibc2.12-x86_64 /usr/local/mysql
+</code></pre>
+<hr />
+<h2>	</h2>
+<h2>创建目录并赋权</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# mkdir -p /data/data
+[root@localhost ~]# mkdir -p /data/logs
+[root@localhost ~]# useradd mysql
+[root@localhost ~]# chown -R mysql:mysql /data
+[root@localhost ~]# chown -R mysql:mysql /usr/local/mysql
+</code></pre>
+<hr />
+<h2>	</h2>
+<h2>编辑参数文件</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# vim /etc/my.cnf
+
+[client]
+port            = 3306
+socket          = /tmp/mysql3306.sock
+secure_auth     = false
+
+[mysqld]
+port            = 3306
+socket          = /tmp/mysql3306.sock
+datadir         = /data/data
+#read_only       = on
+
+#--- GLOBAL ---#
+character_set_server    = utf8
+lower_case_table_names  = 1
+log-output              = FILE
+log-error               = /data/logs/mysql-error.log
+#general_log
+general_log_file        = /data/logs/mysql.log
+pid-file                = /data/data/mysql.pid
+slow-query-log          = 1
+slow_query_log_file     = /data/logs/mysql-slow.log
+tmpdir                  = /tmp/
+long_query_time         = 2
+innodb_force_recovery   = 0
+#innodb_buffer_pool_dump_at_shutdown = 1
+#innodb_buffer_pool_load_at_startup = 1
+#--------------#
+
+#thread_concurrency      = 8  
+thread_cache_size       = 51  
+table_open_cache        = 16384
+open_files_limit        = 65535
+table_definition_cache  = 16384
+sort_buffer_size        = 2M
+join_buffer_size        = 2M
+read_buffer_size        = 2M
+read_rnd_buffer_size    = 8M
+key_buffer_size         = 32M
+bulk_insert_buffer_size = 16M
+myisam_sort_buffer_size = 64M
+tmp_table_size          = 32M
+max_heap_table_size     = 16M 
+query_cache_size       = 32MB
+
+#gtid_mode=on
+#log_slave_updates=1
+#enforce_gtid_consistency=1
+
+#--- NETWORK ---#
+back_log                = 103
+max-connections         = 512
+max_connect_errors      = 100000
+max_allowed_packet      = 32M
+interactive_timeout     = 600
+wait_timeout            = 600
+skip-external-locking
+#max_user_connections    = 0
+external-locking        = FALSE
+#skip-name-resolve
+
+#--- REPL ---#
+server-id               = 1001093306
+sync_binlog             = 1
+log-bin                 = mysql-bin
+binlog_format           = row
+expire_logs_days        = 10
+relay-log               = relay-log
+replicate-ignore-db     = test
+log_slave_updates       =1
+#skip-slave-start
+binlog_cache_size       =4M
+max_binlog_cache_size   =8M
+max_binlog_size         =1024M
+
+
+
+#--- INNODB ---#
+default_storage_engine          = InnoDB
+innodb_data_file_path           = ibdata1:1024M:autoextend
+innodb_buffer_pool_size         = 1040M
+innodb_buffer_pool_instances    = 1
+innodb_additional_mem_pool_size = 16M
+innodb_log_files_in_group       = 2
+innodb_log_file_size            = 256MB
+innodb_log_buffer_size          = 16M
+innodb_flush_log_at_trx_commit  = 2
+innodb_lock_wait_timeout        = 30
+innodb_flush_method             = O_DIRECT
+innodb_max_dirty_pages_pct      = 75
+innodb_io_capacity              = 200
+innodb_thread_concurrency       = 32
+innodb_open_files               = 65535
+innodb_file_per_table           = 1
+transaction_isolation           = REPEATABLE-READ
+innodb_locks_unsafe_for_binlog  = 0
+#innodb_purge_thread            = 4
+skip_name_resolve               = 1
+[mysqldump]
+quick
+max_allowed_packet = 32M
+
+
+[mysql]
+auto-rehash
+# Remove the next comment character if you are not familiar with SQL
+#safe-updates
+default_character_set=utf8
+
+
+[mysqlhotcopy]
+interactive-timeout
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>安装依赖包</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# yum -y install *Dumper*
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>初始化MySQL</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# /usr/local/mysql/scripts/mysql_install_db --defaults-file=/etc/my.cnf --basedir=/usr/local/mysql --database=/data/data --user=mysql
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>设置环境变量</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# su - mysql
+[mysql@localhost ~]$ vim .bash_profile
+
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+MYSQL_HOME=/usr/local/mysql
+
+PATH=$MYSQL_HOME/bin:$PATH:$HOME/.local/bin:$HOME/bin
+
+export PATH
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+~                                                                      
+:wq
+
+[mysql@localhost ~]$ . .bash_profile
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>启动MySQL服务</h2>
+<pre><code class='language-shell' lang='shell'>[mysql@localhost ~]$ mysqld_safe &amp;
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>登录MySQL</h2>
+<pre><code class='language-shell' lang='shell'>[mysql@localhost ~]$ mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.6.42-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+mysql&gt;
+
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>设置密码</h2>
+<pre><code class='language-mysql' lang='mysql'>mysql&gt; set password=password(&#39;root&#39;);
+mysql&gt; flush privileges;
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>修改权限</h2>
+<pre><code class='language-mysql' lang='mysql'>mysql&gt; grant all on *.* to &#39;root&#39;@&#39;%&#39; identified by &#39;root&#39;;
+mysql&gt; flush privileges;
+</code></pre>
+<p>&nbsp;</p>
 
 
 
