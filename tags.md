@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "藏经の阁"
-description: "哈哈，你找到了我的文章基因库"  
+description: "因果轮回，万法归宗"  
 header-img: "img/semantic.jpg"  
 ---
 
