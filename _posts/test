@@ -1,79 +1,41 @@
----
-layout: post
-title: 这是一篇博客文章模板
-date: 2015-3-02
-categories: blog
-tags: [标签一,标签二]
-description: 文章金句。
----
-
-# MySQL 5.6 二进制安装方式
-
-## 	MySQL 5.6 下载
-
-​		![](E:\gif_rec\mysql5.6下载.gif)
-
-​												<!--图一-->
-
-​		进入**MySQL**[官网](https://www.mysql.com/)
-
-​		选择**DOWNLOAD**
-
-​		将页面拉到最后选择**MySQL Community Edition（GPL）**中的 —> **Community（GPL）Downloads**
-
-​		选择**MySQL Community Server（GPL）**
-
-​		选择**Looking for previous GA versions** 中的 —> **MySQL Community Server 5.6**
-
-​		**Selection Version** 选择 **5.6.42**
-
-​		**Selection Version** 选择 **Linux-Generic**
-
-​		**Select OS Version** 选择 **Linux-Generic（glibc 2.12）（x86，64bit）**
-
-​		选择**Download**
-
-------
-
-
-
-## 	解压MySQL 5.6 二进制安装包
-
-![mysql5.6解压](E:\gif_rec\mysql5.6解压.gif)
-
-​												<!--图二-->			
-
-```shell
-[root@localhost ~]# cd /usr/local/src
+<h1>MySQL 5.6 二进制安装方式</h1>
+<h2>MySQL 5.6 下载</h2>
+<p>		<img src='https://github.com/will001449/will.github.io/blob/master/img/mysql5.6%E4%B8%8B%E8%BD%BD.gif' alt='' referrerPolicy='no-referrer' /></p>
+<p>												<!--图一--></p>
+<p>		进入<strong>MySQL</strong><a href='https://www.mysql.com/'>官网</a></p>
+<p>		选择<strong>DOWNLOAD</strong></p>
+<p>		将页面拉到最后选择<strong>MySQL Community Edition（GPL）</strong>中的 —&gt; <strong>Community（GPL）Downloads</strong></p>
+<p>		选择<strong>MySQL Community Server（GPL）</strong></p>
+<p>		选择<strong>Looking for previous GA versions</strong> 中的 —&gt; <strong>MySQL Community Server 5.6</strong></p>
+<p>		<strong>Selection Version</strong> 选择 <strong>5.6.42</strong></p>
+<p>		<strong>Selection Version</strong> 选择 <strong>Linux-Generic</strong></p>
+<p>		<strong>Select OS Version</strong> 选择 <strong>Linux-Generic（glibc 2.12）（x86，64bit）</strong></p>
+<p>		选择<strong>Download</strong></p>
+<hr />
+<p>&nbsp;</p>
+<h2>解压MySQL 5.6 二进制安装包</h2>
+<p><img src='file://E:/gif_rec/mysql5.6%E8%A7%A3%E5%8E%8B.gif' alt='mysql5.6解压' referrerPolicy='no-referrer' /></p>
+<p>												<!--图二-->			</p>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# cd /usr/local/src
 [root@localhost src]# ll
 total 321272
 -rw-r--r-- 1 root root 328979165 Jan  3 08:27 mysql-5.6.42-linux-glibc2.12-x86_64.tar.gz
 [root@localhost src]# tar -zxvf mysql-5.6.42-linux-glibc2.12-x86_64.tar.gz
 [root@localhost src]# mv mysql-5.6.42-linux-glibc2.12-x86_64 /usr/local/mysql
-```
-
-------
-
-## 	
-
-## 	创建目录并赋权
-
-```shell
-[root@localhost ~]# mkdir -p /data/data
+</code></pre>
+<hr />
+<h2>	</h2>
+<h2>创建目录并赋权</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# mkdir -p /data/data
 [root@localhost ~]# mkdir -p /data/logs
 [root@localhost ~]# useradd mysql
 [root@localhost ~]# chown -R mysql:mysql /data
 [root@localhost ~]# chown -R mysql:mysql /usr/local/mysql
-```
-
-------
-
-## 	
-
-## 	编辑参数文件
-
-```shell
-[root@localhost ~]# vim /etc/my.cnf
+</code></pre>
+<hr />
+<h2>	</h2>
+<h2>编辑参数文件</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# vim /etc/my.cnf
 
 [client]
 port            = 3306
@@ -186,36 +148,21 @@ default_character_set=utf8
 
 [mysqlhotcopy]
 interactive-timeout
-```
-
-------
-
-
-
-## 	安装依赖包
-
-```shell
-[root@localhost ~]# yum -y install *Dumper*
-```
-
-------
-
-
-
-## 	初始化MySQL
-
-```shell
-[root@localhost ~]# /usr/local/mysql/scripts/mysql_install_db --defaults-file=/etc/my.cnf --basedir=/usr/local/mysql --database=/data/data --user=mysql
-```
-
-------
-
-
-
-## 	设置环境变量
-
-```shell
-[root@localhost ~]# su - mysql
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>安装依赖包</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# yum -y install *Dumper*
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>初始化MySQL</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# /usr/local/mysql/scripts/mysql_install_db --defaults-file=/etc/my.cnf --basedir=/usr/local/mysql --database=/data/data --user=mysql
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>设置环境变量</h2>
+<pre><code class='language-shell' lang='shell'>[root@localhost ~]# su - mysql
 [mysql@localhost ~]$ vim .bash_profile
 
 # .bash_profile
@@ -247,26 +194,16 @@ export PATH
 :wq
 
 [mysql@localhost ~]$ . .bash_profile
-```
-
-------
-
-
-
-## 	启动MySQL服务
-
-```shell
-[mysql@localhost ~]$ mysqld_safe &
-```
-
-------
-
-
-
-## 	登录MySQL
-
-```shell
-[mysql@localhost ~]$ mysql
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>启动MySQL服务</h2>
+<pre><code class='language-shell' lang='shell'>[mysql@localhost ~]$ mysqld_safe &amp;
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>登录MySQL</h2>
+<pre><code class='language-shell' lang='shell'>[mysql@localhost ~]$ mysql
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 2
 Server version: 5.6.42-log MySQL Community Server (GPL)
@@ -277,44 +214,21 @@ Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
 
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
 
-mysql>
+mysql&gt;
 
-```
-
-------
-
-
-
-## 	设置密码
-
-```mysql
-mysql> set password=password('root');
-mysql> flush privileges;
-```
-
-------
-
-
-
-## 	修改权限
-
-```mysql
-mysql> grant all on *.* to 'root'@'%' identified by 'root';
-mysql> flush privileges;
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>设置密码</h2>
+<pre><code class='language-mysql' lang='mysql'>mysql&gt; set password=password(&#39;root&#39;);
+mysql&gt; flush privileges;
+</code></pre>
+<hr />
+<p>&nbsp;</p>
+<h2>修改权限</h2>
+<pre><code class='language-mysql' lang='mysql'>mysql&gt; grant all on *.* to &#39;root&#39;@&#39;%&#39; identified by &#39;root&#39;;
+mysql&gt; flush privileges;
+</code></pre>
+<p>&nbsp;</p>
