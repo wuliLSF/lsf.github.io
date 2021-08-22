@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "八万四千の法门"
-description: "文章归档"
+description: "万法归宗"
 header-img: "img/orange.jpg"
 ---
 
